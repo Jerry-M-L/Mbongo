@@ -42,7 +42,8 @@ export async function GET() {
 
     return Response.json({ setup: true, message: 'Admin créé avec succès' })
   } catch (error) {
-    console.error('Setup error:', error)
-    return Response.json({ setup: false, message: "Erreur lors de l'initialisation" }, { status: 500 })
+    const msg = error instanceof Error ? error.message : String(error)
+    console.error('Setup error:', msg)
+    return Response.json({ setup: false, message: msg }, { status: 500 })
   }
 }
