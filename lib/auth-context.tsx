@@ -56,12 +56,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       const { data, error } = await authClient.signIn.email({ email, password })
+      if (error) console.error('[auth] signIn error:', error)
       if (data?.user && !error) {
         setUser(mapUser(data.user))
         return true
       }
       return false
-    } catch {
+    } catch (e) {
+      console.error('[auth] signIn exception:', e)
       return false
     }
   }
